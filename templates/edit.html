@@ -1,0 +1,54 @@
+{% extends "main_pk_templates.html" %}
+
+
+{% block content %}
+<script>
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // код для мобильных устройств
+    console.log("Мобильное устройство")
+       location.replace("/edit_mobile/edit_mobile/");
+
+  } else {
+    // код для обычных устройств
+    console.log("ПК")
+    //location.replace("/edit/edit/");
+}
+
+</script>
+                            <h4 class="art-postheader"><center>Объекты:</center></h4>
+
+                <div class="art-postcontent art-postcontent-0 clearfix"><div class="art-content-layout">
+    <div class="art-content-layout-row">
+    <div class="art-layout-cell layout-item-0" style="width: 100%" >
+
+
+        <table class="tftable" border="1" style="align: center;">
+            <tr><th><font color="#FFFFFF">Наименование объекта</font></th><th><font color="#FFFFFF">ID объекта</font></th><th><font color="#FFFFFF">Телефон</font></th><th><font color="#FFFFFF">Дополнительная информация</font></th></tr>
+                {% for aaa in list1 %}
+            <tr><td><a href="/edit/object/?ID={{ aaa.ID_obj }}"><font color="#000000">{{ aaa.name }}</font></a></td><td><a href="/edit/object/?ID={{ aaa.ID_obj }}"><font color="#000000">{{ aaa.ID_obj }}</font></a></td>
+            <td><a href="/edit/object/?ID={{ aaa.ID_obj }}"><font color="#000000">{{ aaa.telephone }}</font></a></td><td><a href="/edit/object/?ID={{ aaa.ID_obj }}"><font color="#000000">{{ aaa.dop }}</font></a>
+            </td></tr>
+                {% endfor %}
+
+         </table>
+    </div>
+    </div>
+
+</div>
+<div class="art-content-layout">
+    <div class="art-content-layout-row">
+    <div class="art-layout-cell layout-item-0" style="width: 50%" >
+
+    </div><div class="art-layout-cell layout-item-0" style="width: 50%" >
+
+    </div>
+    </div>
+</div>
+</div>
+
+        <center>
+            <p class="form-submit" style="text-align:center; margin: 20px auto;">
+            <input name="submit" class="art-button" onclick="location.href='/mobile/mobile/';" value="Назад в монитор" style="text-align:center; margin: 45px auto;"></p>
+        </center>
+{% endblock %}

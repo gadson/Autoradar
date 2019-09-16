@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход/Регистрация</title>
+<style>
+
+    body{
+  font-family: 'Open Sans', sans-serif;
+  background:#3498db;
+  margin: 0 auto 0 auto;
+  width:100%;
+  text-align:center;
+  margin: 20px 0px 20px 0px;
+
+}
+
+p{
+  font-size:12px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+h1{
+  font-size:1.5em;
+  color:#525252;
+}
+
+.box{
+  background:white;
+  width:300px;
+  border-radius:6px;
+  margin: 0 auto 0 auto;
+  padding:0px 0px 70px 0px;
+  border: #2980b9 4px solid;
+}
+
+.email{
+  background:#ecf0f1;
+  border: #ccc 1px solid;
+  border-bottom: #ccc 2px solid;
+  padding: 8px;
+  width:250px;
+  color:#AAAAAA;
+  margin-top:2px;
+  font-size:1em;
+  border-radius:4px;
+}
+
+.password{
+  border-radius:4px;
+  background:#ecf0f1;
+  border: #ccc 1px solid;
+  padding: 8px;
+  width:250px;
+  font-size:1em;
+}
+
+.btn{
+  background:#2ecc71;
+  width:125px;
+  padding-top:5px;
+  padding-bottom:5px;
+  color:white;
+  border-radius:4px;
+  border: #27ae60 1px solid;
+
+  margin-top:20px;
+  margin-bottom:20px;
+  float:left;
+  margin-left:16px;
+  font-weight:800;
+  font-size:0.8em;
+}
+
+.btn:hover{
+  background:#2CC06B;
+}
+
+#btn2{
+  float:left;
+  background:#3498db;
+  width:125px;  padding-top:5px;
+  padding-bottom:5px;
+  color:white;
+  border-radius:4px;
+  border: #2980b9 1px solid;
+
+  margin-top:20px;
+  margin-bottom:20px;
+  margin-left:10px;
+  font-weight:800;
+  font-size:0.8em;
+}
+
+#btn2:hover{
+background:#3594D2;
+}
+
+</style>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script type="text/javascript">
+function checkPassword() {
+    var password = $("#txtNewPassword").val();
+    var confirmPassword = $("#txtConfirmPassword").val();
+    var length_of_str = password.length;
+    if (length_of_str < 6)
+        $("#divCheckPasswordMatch").html("Пароль не может быть меньше 6 символов");
+    else
+        $("#divCheckPasswordMatch").html("");
+
+}
+
+function checkPasswordMatch() {
+    var password = $("#txtNewPassword").val();
+
+    var confirmPassword = $("#txtConfirmPassword").val();
+    var length_of_str = password.length;
+    if (password != confirmPassword)
+        $("#divCheckPasswordMatch").html("Пароль не совпадает!");
+    else
+        $("#divCheckPasswordMatch").html("Пароль совпадает");
+}
+</script>
+</head>
+<body>
+
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:700,600' rel='stylesheet' type='text/css'>
+
+<form method="post" action="">{% csrf_token %}
+
+<div class="box">
+<h1>Регистрация на портале</h1>
+    {{args}}
+    <p style="color:#000000;" align="center">Придумайте логин</p>
+<input  style="text-align:center; color:#000000;" type="login" name="username" value="" onFocus="field_focus(this, 'username');" onblur="field_blur(this, 'username');" class="email" />
+    <p style="color:#000000;" align="center">Введите Ваш e-mail</p>
+    <input type="email" name="email"  style="text-align:center; color:#000000;" value="" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" />
+<p style="color:#000000;" align="center">Придумайте пароль</p>
+<input type="password"  style="text-align:center; color:#000000;" name="password" id="txtNewPassword" value="" onkeyup="checkPassword();"  onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" />
+    <p style="color:#000000;" align="center">Введите пароль еще раз</p>
+<input type="password" name="password2"  style="text-align:center; color:#000000;" id="txtConfirmPassword" onkeyup="checkPasswordMatch();" value="" onFocus="field_focus(this, 'email');" onblur="field_blur(this, 'email');" class="email" />
+
+<div class="registrationFormAlert" id="divCheckPasswordMatch"></div>
+<a href="/login/login/"><div id="btn2">Вход</div></a>
+<button  style="align:center;" type="submit" class="btn">Регистрация</button>
+
+
+</div> <!-- End Box -->
+
+</form>
+<a style="color:#f1c40f;" href="/policy/policy">Privacy policy<br>Политика конфиденциальности</a>
+<p>Забыл пароь? <u style="color:#f1c40f;">Нажми здесь!</u></p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js" type="text/javascript"></script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Вход/Регистрация</title>
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js"></script>
+    <style>
+
+        @import url(http://fonts.googleapis.com/css?family=Bree+Serif);
+
+/*******************
+SELECTION STYLING
+*******************/
+
+::selection {
+	color: #fff;
+	background: #f676b2; /* Safari */
+}
+::-moz-selection {
+	color: #fff;
+	background: #f676b2; /* Firefox */
+}
+
+/*******************
+BODY STYLING
+*******************/
+
+* {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+body {
+	background: #cacdcf;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight:300;
+	text-align: left;
+
+}
+
+#wrapper {
+	/* Center wrapper perfectly */
+
+	position: center;
+	padding: 0px 0px 0px 0px;
+
+	width: 100%;
+    height: 100%;
+	margin-top: 40px;
+
+}
+#wrapper2 {
+
+    cursor: pointer;
+    pointer-events: all; /* делаем элемент активным для взаимодействия */
+	width: 100%;
+	font-size: calc(0.5em + 2vw);
+	margin: 0 auto;
+	position: relative;
+	z-index:5;
+}
+
+
+/*******************
+LOGIN FORM
+*******************/
+
+.login-form {
+
+	width: 90%;
+	margin: 0 auto;
+	position: relative;
+
+	background: #f3f3f3;
+	border: 1px solid #fff;
+	border-radius: 10px;
+
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/*******************
+HEADER
+*******************/
+
+.login-form .header {
+	padding: 10px 30px 10px 30px;
+}
+
+.login-form .header h1 {
+	font-family: 'Bree Serif', serif;
+	font-weight: 300;
+	font-size: calc(0.8em + 4vw);
+	line-height:calc(0.8em + 4vw);
+	color: #414848;
+	text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
+	margin-bottom: 10px;
+}
+
+.login-form .header span {
+	font-size: calc(0.4em + 4vw);
+	line-height: calc(0.4em + 4vw);
+	color: #678889;
+	text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
+}
+
+/*******************
+CONTENT
+*******************/
+
+.login-form .content {
+	padding: 0 30px 25px 30px;
+}
+
+/* Input field */
+.login-form .content .input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 15px 25px 10px 25px;
+
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+	font-weight: calc(0.1em + 4vw);
+	font-size: calc(0.1em + 4vw);
+	color: #9d9e9e;
+	text-shadow: 1px 1px 0 rgba(256,256,256,1.0);
+
+	background: #fff;
+	border: 1px solid #fff;
+	border-radius: 5px;
+
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.50);
+}
+
+/* Second input field */
+.login-form .content .password, .login-form .content .pass-icon {
+	margin-top: 25px;
+}
+
+.login-form .content .input:hover {
+	background: #dfe9ec;
+	color: #414848;
+}
+
+.login-form .content .input:focus {
+	background: #dfe9ec;
+	color: #414848;
+
+	box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+}
+
+
+
+
+
+/*******************
+FOOTER
+*******************/
+
+.login-form .footer {
+	padding: 25px 30px 10px 30px;
+	overflow: auto;
+
+	background: #d4dedf;
+	border-top: 1px solid #fff;
+
+	box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+	-moz-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+	-webkit-box-shadow: inset 0 1px 0 rgba(0,0,0,0.15);
+}
+
+/* Login button */
+.login-form .footer .button {
+	float:center;
+	padding: 11px 25px;
+
+	font-family: 'Bree Serif', serif;
+	font-weight: calc(0.4em + 4vw);
+	font-size: calc(0.4em + 4vw);
+	color: #fff;
+	text-shadow: 0px 1px 0 rgba(0,0,0,0.25);
+
+	background: #56c2e1;
+	border: 1px solid #46b3d3;
+	border-radius: 5px;
+	cursor: pointer;
+
+	box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+	-moz-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+	-webkit-box-shadow: inset 0 0 2px rgba(256,256,256,0.75);
+}
+
+.login-form .footer .button:hover {
+	background: #3f9db8;
+	border: 1px solid rgba(256,256,256,0.75);
+
+	box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+	-webkit-box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.login-form .footer .button:focus {
+	position: relative;
+	bottom: -1px;
+
+	background: #56c2e1;
+
+	box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+	-moz-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+	-webkit-box-shadow: inset 0 1px 6px rgba(256,256,256,0.75);
+}
+
+/* Register button */
+.login-form .footer .register {
+	display: block;
+	float: center;
+	padding: 10px 5px 10px 0;
+	margin-right: 20px;
+	background: none;
+	border: none;
+	cursor: pointer;
+
+	font-family: 'Bree Serif', serif;
+	font-weight: calc(0.4em + 4vw);
+	font-size: calc(0.4em + 4vw);
+	color: #414848;
+	text-shadow: 0px 1px 0 rgba(256,256,256,0.5);
+}
+
+.login-form .footer .register:hover {
+	color: #3f9db8;
+}
+
+.login-form .footer .register:focus {
+	position: relative;
+	bottom: -1px;
+}
+
+
+
+
+    </style>
+</head>
+<body>
+<script>
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    // код для мобильных устройств
+    console.log("Мобильное устройство")
+
+  } else {
+    // код для обычных устройств
+    console.log("ПК")
+    location.replace("/login/login/");
+}
+
+function register() {
+    location.replace('/register_mobile/register_mobile/');
+}
+</script>
+
+<div id="wrapper">
+
+<form name="login-form" class="login-form" action="" method="post">{% csrf_token %}
+
+    <div class="header">
+		<h1>Авторизация</h1>
+		<span>Введите ваши регистрационные данные для входа в ваш личный кабинет. </span>
+    </div>
+
+    <div class="content">
+		<input name="username" type="text" class="input username" value="Логин" onfocus="this.value=''" />
+		<input name="password" type="password" class="input password" value="Пароль" onfocus="this.value=''" />
+    </div>
+             <center><p align="center" class="ptext" >{{args}}</p></center><br>
+    <div class="footer">
+		<input type="submit" name="submit" value="ВОЙТИ" class="button" />
+        <input type="button" name="submit" onclick="register();" value="Регистрация" class="register" />
+    </div>
+</form><div id="wrapper2">
+    <center>
+        <a class="wrapper2" type="button" href="/policy/policy" style="color:#ffffff;"><div><u>Privacy policy<br>Политика конфиденциальности</u></div></a>
+</center></div>
+
+</div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(54031234, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/54031234" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+
+</body>
+</html>

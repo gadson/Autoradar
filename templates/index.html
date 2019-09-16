@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<!--[if lt IE 7 ]> <html class="ie ie6 ie-lt10 ie-lt9 ie-lt8 ie-lt7 no-js" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7 ie-lt10 ie-lt9 ie-lt8 no-js" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8 ie-lt10 ie-lt9 no-js" lang="en"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9 ie-lt10 no-js" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <!-- <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Авторадар - система мониторинга передвижения объектов</title>
+    <meta name="author" content="Dobrovoimaster" />
+    <meta name="description" content="Боковая панель с элементами меню, выдвигающаяся по клику, на чистом css, без использлвания javascript" />
+    <meta name="keywords" content="боковое меню, выдвижное меню, выдвигающееся по клику, боковая панеь, css3, html, css" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
+<!--	<link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/right-nav-style.css">  -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,300&subset=latin,cyrillic' rel='stylesheet'>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"></script>
+    <script src="http://openweathermap.org/js/leaflet-layer.js"></script>
+	<script src="http://leaflet.github.io/Leaflet.markercluster/dist/leaflet.markercluster-src.js"></script>
+
+    {% load staticfiles %}
+<style>@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300&subset=latin,cyrillic);
+
+* {
+    box-sizing: border-box;
+}
+
+/**
+ * ааАаКбаИаМаАаЛбаНаАб аВббаОбаА аБаАаЗаОаВаОаГаО аКаОаНбаЕаЙаНаЕбаА
+ */
+html {
+    font-size: 100%;
+}
+html,
+body, #map {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+}
+
+body {
+    color: #333;
+    font: 1em 'Open Sans', sans-serif;
+    background-color: #f1f1f1;
+}
+
+
+/* аИаЗаМаЕаНбаЕаМ аПаОаЛаОcб аПбаОаКбббаКаИ */
+
+::-webkit-scrollbar {
+    width: .65em;
+}
+
+::-webkit-scrollbar-track {
+    background-color: rgba(217, 217, 217, 0.75);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(170, 170, 170, 0.6);
+    border-radius: 5px;
+    box-shadow: inset 0.05em 0.05em 0 rgba(0, 0, 0, 0.1), inset 0 -0.05em 0 rgba(0, 0, 0, 0.07);
+}
+
+main {
+width: 100%; height: 100%; padding: 0; margin: 0;
+}
+
+article {
+    margin: 0 1em;
+    padding: 0 22px;
+    -webkit-transition: -webkit-transform .3s;
+    -moz-transition: : -moz-transform .3s;
+    transition: transform .3s;
+}
+
+header {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+footer {
+    font-size: 14px;
+    text-align: center
+}
+
+p {
+    margin-bottom: 16px;
+}
+
+hr {
+    margin: 22px 0;
+    height: 1px;
+    border: 0;
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+h1,
+h2 {
+    margin-bottom: 22px;
+    color: #191919;
+    font-weight: 300;
+}
+
+h1 {
+    font-size: 30px;
+    line-height: 15px;
+}
+
+h2 {
+    color: #565d66;
+    font-size: 26px;
+    line-height: 26px;
+}
+
+a {
+    color: #006b05;
+    text-decoration: none;
+}
+.btn {
+    -webkit-border-radius: 10em;
+    -moz-border-radius: 10em;
+    -ms-border-radius: 10em;
+    -o-border-radius: 10em;
+    border-radius: 10em;
+    border: 0;
+    color: #fff!important;
+    margin: 6px;
+    white-space: normal!important;
+    word-wrap: break-word;
+		display: inline-block;
+    line-height: 1.25;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: .5rem 1rem;
+    font-size: 1rem;
+    font-weight: 400;
+    -webkit-box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    -moz-box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+.btn {
+	  -webkit-transition: box-shadow .2s ease-out;
+	  -moz-transition: box-shadow .2s ease-out;
+		-ms-transition: box-shadow .2s ease-out;
+    transition: box-shadow .2s ease-out;
+}
+.btn:hover {
+	  -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	  -moz-box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+	  box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+}
+.btn-primary {
+	  border: 2px solid #2BBBAD;
+    color: #00695c!important;
+    background-color: transparent;
+}
+
+.btn-secondary {
+    border: 2px solid #00C851;
+    color: #007E33!important;
+    background-color: transparent;
+}
+/**
+ * Переключаемая боковая панель навигации
+ * выдвигающаяся справа
+ */
+
+.nav {
+    /*  ширна произвольная, не стесняйтесь экспериментировать */
+    width: 280px; /*////////////////////////////////////////////////////////////////////////////////////////////////////// */
+    min-width: 280px;
+    /* фиксируем и выставляем высоту панели на максимум */
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    margin: 0;
+    /* сдвигаем (прячем) панель относительно правого края страницы */
+    right: -320px;
+    /* внутренние отступы */
+    padding: 15px 20px;
+    /* плавный переход смещения панели */
+    -webkit-transition: right 0.3s;
+    -moz-transition: right 0.3s;
+    transition: right 0.3s;
+    /* определяем цвет фона панели */
+    background:  #16a085;
+    /* поверх других элементов */
+    z-index: 2000;
+}
+
+
+/**
+ * Кнопка переключения панели
+ * тег <label>
+ */
+
+.nav-toggle {
+    /* абсолютно позиционируем */
+    position: absolute;
+    /* относительно правого края панели */
+    right: 320px;
+    /* отступ от верхнего края панели */
+    top: 2.5em;
+    /* внутренние отступы */
+    padding: 0.5em;
+    /* определяем цвет фона переключателя
+     * чаще вчего в соответствии с цветом фона панели
+    */
+    background: inherit;
+    /* цвет текста */
+    color: #dadada;
+    /* вид курсора */
+    cursor: pointer;
+    /* размер шрифта */
+    font-size: 1.2em;
+    line-height: 1;
+    /* всегда поверх других элементов страницы */
+    z-index: 2001;
+    /* анимируем цвет текста при наведении */
+    -webkit-transition: color .25s ease-in-out;
+    -moz-transition: color .25s ease-in-out;
+    transition: color .25s ease-in-out;
+}
+
+
+/* определяем текст кнопки
+ * символ Unicode (TRIGRAM FOR HEAVEN)
+*/
+
+.nav-toggle:after {
+    content: '\2630';
+    text-decoration: none;
+}
+
+
+/* цвет текста при наведении */
+
+.nav-toggle:hover {
+    color: #f4f4f4;
+}
+
+
+/**
+ * Скрытый чекбокс (флажок)
+ * невидим и недоступен :)
+ * имя селектора атрибут флажка
+ */
+
+[id='nav-toggle'] {
+    position: absolute;
+    display: none;
+}
+
+
+/**
+ * изменение положения переключателя
+ * при просмотре на мобильных устройствах
+ * когда навигация раскрыта, распологаем внутри панели
+*/
+
+[id='nav-toggle']:checked ~ .nav > .nav-toggle {
+    left: auto;
+    right: 2px;
+    top: 1em;
+}
+
+
+/**
+ * Когда флажок установлен, открывается панель
+ * используем псевдокласс:checked
+ */
+
+[id='nav-toggle']:checked ~ .nav {
+    right: 0;
+    box-shadow:-4px 0px 20px 0px rgba(0,0,0, 0.5);
+    -moz-box-shadow:-4px 0px 20px 0px rgba(0,0,0, 0.5);
+    -webkit-box-shadow:-4px 0px 20px 0px rgba(0,0,0, 0.5);
+    overflow-y: auto;
+}
+
+
+/*
+ * смещение контента страницы
+ * на размер ширины панели,
+ * фишка необязательная, на любителя
+*/
+
+[id='nav-toggle']:checked ~ main > article {
+    -webkit-transform: translateX(-320px);
+    -moz-transform: translateX(-320px);
+    transform: translateX(-320px);
+}
+
+
+/*
+ * изменение символа переключателя,
+ * привычный крестик (MULTIPLICATION X),
+ * вы можете испльзовать любой другой значок
+*/
+
+[id='nav-toggle']:checked ~ .nav > .nav-toggle:after {
+    content: '\2715';
+}
+
+
+/**
+ * профиксим баг в Android <= 4.1.2
+ * см: http://timpietrusky.com/advanced-checkbox-hack
+ */
+
+body {
+    -webkit-animation: bugfix infinite 1s;
+}
+
+@-webkit-keyframes bugfix {
+    to {
+      padding: 0;
+    }
+}
+
+
+/**
+ * позаботьтимся о средних и маленьких экранах
+ * мобильных устройств
+ */
+
+@media screen and (min-width: 320px) {
+    html,
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    html,
+    body {
+      margin: 0;
+      overflow-x: hidden;
+    }
+    .nav {
+      width: 100%;
+      box-shadow: none
+    }
+}
+
+
+/**
+ * Формируем стиль заголовка (логотип) панели
+*/
+
+.nav h2 {
+    width: 90%;
+    padding: 0;
+    margin: 10px 0;
+    text-align: center;
+    text-shadow: rgba(255, 255, 255, .1) -1px -1px 1px, rgba(0, 0, 0, .5) 1px 1px 1px;
+    font-size: 1.1em;
+    line-height: 1.3em;
+    opacity: 0;
+    transform: scale(0.1, 0.1);
+    -ms-transform: scale(0.1, 0.1);
+    -moz-transform: scale(0.1, 0.1);
+    -webkit-transform: scale(0.1, 0.1);
+    transform-origin: 0% 0%;
+    -ms-transform-origin: 0% 0%;
+    -moz-transform-origin: 0% 0%;
+    -webkit-transform-origin: 0% 0%;
+    transition: opacity 0.8s, transform 0.8s;
+    -ms-transition: opacity 0.8s, -ms-transform 0.8s;
+    -moz-transition: opacity 0.8s, -moz-transform 0.8s;
+    -webkit-transition: opacity 0.8s, -webkit-transform 0.8s;
+}
+
+.nav h2 a {
+    color: #dadada;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+
+/*плавное появление заголовка (логотипа) при раскрытии панели */
+
+[id='nav-toggle']:checked ~ .nav h2 {
+    opacity: 1;
+    transform: scale(1, 1);
+    -ms-transform: scale(1, 1);
+    -moz-transform: scale(1, 1);
+    -webkit-transform: scale(1, 1);
+}
+
+
+/**
+ * формируем непосредственно само меню
+ * используем неупорядоченный список для пунктов меню
+ * прикрутим трансфомации и плавные переходы
+ */
+
+.nav > ul {
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav > ul > li {
+    line-height: 2.0;
+    opacity: 0;
+    -webkit-transform: translateX(50%);
+    -moz-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+    -webkit-transition: opacity .5s .1s, -webkit-transform .5s .1s;
+    -moz-transition: opacity .5s .1s, -moz-transform .5s .1s;
+    -ms-transition: opacity .5s .1s, -ms-transform .5s .1s;
+    transition: opacity .5s .1s, transform .5s .1s;
+}
+
+[id='nav-toggle']:checked ~ .nav > ul > li {
+    opacity: 1;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+}
+
+
+/* определяем интервалы появления пунктов меню */
+
+.nav > ul > li:nth-child(2) {
+    -webkit-transition: opacity .5s .2s, -webkit-transform .5s .2s;
+    transition: opacity .5s .2s, transform .5s .2s;
+}
+
+.nav > ul > li:nth-child(3) {
+    -webkit-transition: opacity .5s .3s, -webkit-transform .5s .3s;
+    transition: opacity .5s .3s, transform .5s .3s;
+}
+
+.nav > ul > li:nth-child(4) {
+    -webkit-transition: opacity .5s .4s, -webkit-transform .5s .4s;
+    transition: opacity .5s .4s, transform .5s .4s;
+}
+
+.nav > ul > li:nth-child(5) {
+    -webkit-transition: opacity .5s .5s, -webkit-transform .5s .5s;
+    transition: opacity .5s .5s, transform .5s .5s;
+}
+
+.nav > ul > li:nth-child(6) {
+    -webkit-transition: opacity .5s .6s, -webkit-transform .5s .6s;
+    transition: opacity .5s .6s, transform .5s .6s;
+}
+
+.nav > ul > li:nth-child(7) {
+    -webkit-transition: opacity .5s .7s, -webkit-transform .5s .7s;
+    transition: opacity .5s .7s, transform .5s .7s;
+}
+
+
+/**
+ * оформление ссылок пунктов меню
+ */
+
+.nav > ul > li > a {
+    display: inline-block;
+    position: relative;
+    padding: 0;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.0em;
+    color: #dadada;
+    width: 100%;
+    text-decoration: none;
+    /* плавный переход */
+    -webkit-transition: color .5s ease, padding .5s ease;
+    -moz-transition: color .5s ease, padding .5s ease;
+    transition: color .5s ease, padding .5s ease;
+}
+
+
+/**
+ * состояние ссылок меню при наведении
+ */
+
+.nav > ul > li > a:hover,
+.nav > ul > li > a:focus {
+    color: white;
+    padding-left: 15px;
+}
+
+
+/**
+ * линия подчеркивания ссылок меню
+ */
+
+.nav > ul > li > a:before {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    -webkit-transition: width 0s ease;
+    transition: width 0s ease;
+}
+
+.nav > ul > li > a:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 100%;
+    background: #3bc1a0;
+    -webkit-transition: width .5s ease;
+    transition: width .5s ease;
+}
+
+
+/**
+ * анимируем линию подчеркивания
+ * ссылок при наведении
+ */
+
+.nav > ul > li > a:hover:before {
+    width: 0%;
+    background: #3bc1a0;
+    -webkit-transition: width .5s ease;
+    transition: width .5s ease;
+}
+
+.nav > ul > li > a:hover:after {
+    width: 0%;
+    background: transparent;
+    -webkit-transition: width 0s ease;
+    transition: width 0s ease;
+}
+
+
+/* фон затемнения на основной контент
+ * при этом элементы блокируютя
+ * спорная такая фича, если оно вам надо
+ * просто раскомментируйте
+*/
+
+/*
+.mask-content {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    visibility: hidden;
+    opacity: 0;
+}
+
+[id='nav-toggle']:checked ~ .mask-content {
+    visibility: visible;
+    opacity: 1;
+    -webkit-transition: opacity .5s, visibility .5s;
+    transition: opacity .5s, visibility .5s;
+}
+
+/*  ===== Выдвигающаяся верхняя панель
+*   =========================================
+*   Базовый контейнер выдвижной панели */
+.top-panel {
+    background: #39464e;
+    position: absolute;
+
+
+        @media (max-width: 478px){
+    top: -390px;
+    }
+    @media (min-width: 479px){
+    top: -290px;
+    }
+
+
+
+    left: 0;
+    width: 100%;
+    height: 650px;
+    padding: 0;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    transition: top 400ms cubic-bezier(0.17,0.04,0.03,0.94)
+}
+/* Блок сообщения */
+.message {
+    color: #fff;
+    font-weight: 300;
+    position: relative;
+    padding: 1em 2em;
+    margin: 0 auto;
+    max-width: 980px
+}
+/* Заголовок 1 уровня */
+.message h1 {
+    color: #fff
+}
+/* Заголовок 2 уровня */
+.message h2 {
+    color: #888
+}
+.message p {
+    margin: 1em 0
+}
+.message a {
+    text-decoration: none;
+    color: #748b74
+}
+.message a:hover {
+    color: #95984b
+}
+/* Переключатель панели */
+label.btn {
+    display: block;
+    position: absolute;
+    left: 80px;
+    top: -0;
+    cursor: pointer;
+    background: #2bbbad;
+    width: 50px;
+    border-radius: 0 0 5px 5px;
+    padding: 8px 5px;
+    color: #FFF;
+    line-height: 20px;
+    font-size: 12px;
+    text-align: center;
+    -webkit-font-smoothing: antialiased;
+    cursor: pointer;
+    transition: all 400ms cubic-bezier(0.17,0.04,0.03,0.94);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    z-index: 9999
+}
+/* Переключатель при наведении */
+label.btn:hover {
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18),0 4px 15px 0 rgba(0,0,0,0.15)
+}
+/* Стрелка переключателя вниз */
+label.btn:after {
+    content: '\f078';
+    font: normal 18px/1 FontAwesome;
+    text-decoration: inherit
+}
+/* Активация панели */
+.open:checked ~ .top-panel {
+    top: 0
+}
+
+@media (min-width: 596px){
+.open:checked ~ label.btn {
+    top: 240px
+}
+/* Смещение контейнера контента страницы */
+
+.open:checked ~ .container {
+    margin-top: 243px
+}
+}
+
+@media (max-width: 340px){
+.open:checked ~ label.btn {
+    top: 355px
+}
+/* Смещение контейнера контента страницы */
+
+.open:checked ~ .container {
+    margin-top: 358px
+}
+}
+
+@media only screen and (min-width: 341px) and (max-width: 595px){
+.open:checked ~ label.btn {
+    top: 280px
+}
+/* Смещение контейнера контента страницы */
+
+.open:checked ~ .container {
+    margin-top: 283px
+}
+}
+
+/* кнопка */
+.btn2{
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 8px 24px;
+    border: 4px;
+    cursor:pointer;
+
+}
+
+
+
+/* Цвет переключателя при клике */
+.open:checked + label.btn {
+    background: #dd6149
+}
+/* Стрелка переключателя вверх*/
+.open:checked + label.btn:after {
+    content: '\f077';
+    font: normal 18px/1 FontAwesome
+}
+/* Контейнер контента */
+.container {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+
+/*   max-width: 980px; */
+    margin: 0 auto;
+    text-align: center;
+    transition: margin 400ms cubic-bezier(0.17,0.04,0.03,0.94);
+    padding: -5em -3em
+}
+
+</style>
+</head>
+
+<body>
+<script>
+    var intervalID = setInterval(updateCarPosition, 15000);
+    var marker;
+    var markers;
+    var map;
+    var zoom;
+
+function initMap() {
+    var x,y;
+    zoom = {{ zoom }}
+    var geoJSON = "{{list1}}".replace(/&#39;/g,"\"");
+    var centerJSON = "{{center}}".replace(/&#39;/g,"\"");
+    var geo = JSON.parse(geoJSON);
+    console.log(geoJSON);
+    console.log(centerJSON);
+    if (centerJSON != ""){
+    var center = JSON.parse(centerJSON);
+        x = center[0].center[0].Latitude;
+        y = center[0].center[0].Longitude;
+    }
+    else{
+        x = geo[0].Data[0].Latitude;
+        y = geo[0].Data[0].Longitude;
+    };
+    //console.log(Object.keys(geo).length);
+    //console.log(Object.keys(geo[0]));
+    //alert(geoJSON, "utf-8");
+
+//    var mymap = L.map('map').setView([Number(x),  Number(y)], Number(zoom));
+
+
+
+
+  osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  osmAttribution =
+    'Map data <a target="_blank" href="http://www.openstreetmap.org">OSM</a> contributors ',
+  osmLayer = new L.TileLayer(osmUrl, {
+      maxZoom: 18,
+      attribution: osmAttribution
+    }),
+  weatherLayer = new OsmJs.Weather.LeafletLayer({lang: 'en'}),
+  baseMaps = {
+      "OpenStreetMap": osmLayer
+    },
+  overlayMaps = {
+      "Метеоданные": weatherLayer
+    },
+  layersControl = new L.Control.Layers(baseMaps, overlayMaps),
+  popup = new L.Popup(),
+  map = new L.Map('map', {
+      center: new L.LatLng(Number(x),Number(y)),
+      zoom: Number(zoom),
+      layers: [osmLayer]
+    });
+    // Массив layers: [] отображает слои на странице по умолчанию
+//map.addControl(layersControl);
+//map.on('click', (e) => {
+//    popup.setLatLng(e.latlng);
+//    popup.setContent('Координаты точки ' +
+//      ' (' + e.latlng.lat.toFixed(6) +
+//      ', ' + e.latlng.lng.toFixed(6) + ')');
+//    map.openPopup(popup);
+//  })
+
+    markers = L.layerGroup();
+    var count = Object.keys(geo).length;
+    var step;
+    for (step = 0; step < count; step++) {
+
+        marker = L.marker([Number(geo[step].Data[0].Latitude),Number(geo[step].Data[0].Longitude)],{title: geo[step].Name, draggable: true, id:step+1});
+        marker.bindPopup("<strong>"+geo[step].Name+"</strong><br />"+geo[step].Dop).openPopup();
+        markers.addLayer(marker);
+    };
+map.addLayer(markers);
+
+
+//var group = new L.featureGroup(markers);
+
+//map.fitBounds(group.getBounds());
+}
+
+function updateCarPosition () {
+
+    console.log("Отправляем запрос на сервер");
+    $.getJSON("/api/v1/mon/?ID={{ID}}&", function (json) {
+        if (json.success == true) {
+        console.log("OK");
+        // делаете из данных метки и добавляете на карту, либо сдвигаете старые
+        //json.Items
+        var count = Object.keys(json.Items).length;
+        console.log("Количество объектов "+count);
+        if (marker !== null) {
+            markers.clearLayers();;
+        }
+
+        for (step = 0; step < count; step++) {
+            console.log("Объект: "+step+", ID:"+json.Items[step].ID);
+            console.log("Широта: "+json.Items[step].Value.movment[0].Latitude);
+            console.log("Долгота: "+json.Items[step].Value.movment[0].Longitude);
+            marker = L.marker([Number(json.Items[step].Value.movment[0].Latitude),Number(json.Items[step].Value.movment[0].Longitude)],{title: json.Items[step].Name, draggable: true,id: step+1}); //.addTo(map).bindPopup("<strong>"+json.Items[step].Name+"</strong><br />"+json.Items[step].Dop).openPopup();;
+            marker.bindPopup("<strong>"+json.Items[step].Name+"</strong><br />"+json.Items[step].Dop).openPopup();
+        markers.addLayer(marker);
+         };
+         map.setView(new L.LatLng(Number(json.center[0].Latitude),Number(json.center[0].Longitude)), Number(zoom),{ animation:true});
+         map.addLayer(markers);
+
+        }
+        else
+        {alert("Ошибка полученных данных");
+        };
+    })
+
+}
+
+function btnClick(){
+//map.setView(new L.LatLng(56.4969, 84.99573), 12,{ animation:true})
+alert("Спасибо за Ваш визит. Ждем Вас снова!")
+//var isAdmin = confirm("Вы действительно хотите выйти из системы?");
+
+alert( isAdmin );
+}
+
+</script>
+
+ <input class="open" id="top-box" type="checkbox" hidden>
+       <label class="btn" for="top-box"></label>
+        <div class="top-panel">
+            <div class="message">
+                <form action="/mobile/mobile/" method="post">{% csrf_token %}
+                <h1 style="text-align:center;">Настройка</h1>
+                <p style="text-align:center;">Выберите объект для отображения при открытии страницы:&nbsp;&nbsp;<select id="select" name="select">
+                {% for aaa in list1 %}
+                    {% if aaa.Name != sel  %}<option value="{{aaa.ID_obj}}">{{aaa.Name}}</option>
+                    {% else %}<option selected="selected" id="main_id" value="{{aaa.ID_obj}}">{{aaa.Name}}</option>
+                    {% endif %}
+                {% endfor %}
+                </select><br>Установка масштаба карты:
+
+                <select name="zoom" size="1">
+                {% if zoom == "15"  %}<option selected="selected" value="15">15</option> {% else %}<option value="15">15</option>{% endif %}
+                {% if zoom == "14"  %}<option selected="selected" value="14">14</option> {% else %}<option value="14">14</option>{% endif %}
+                {% if zoom == "12"  %}<option selected="selected" value="12">12</option> {% else %}<option value="12">12</option>{% endif %}
+                {% if zoom == "10"  %}<option selected="selected"  value="10">10</option> {% else %}<option value="10">10</option>{% endif %}
+                {% if zoom == "8"  %}<option selected="selected"  value="8">8</option> {% else %}<option value="8">8</option>{% endif %}
+                </select>
+                    <br>Сейчас при старте отображается: <b>{{ sel }}</b>, масштаб: <b>{{ zoom }}</b>.
+                </p>
+                 <p style="text-align:center;"><input type="submit" class="btn2" value="Сохранить"></p>
+                 </form>
+
+            </div>
+        </div>
+
+
+    <!--
+    Скрытый checkbox, отвечающий за переключение панели, должен быть в верхней части документа, лучше сразу после тега `<body>`
+
+    `id` атрибут предназначен для связки с атрибутом `for` тега <label>
+
+    Атрибут `hidden` указывает состояние «скрытый» у текущего элемента
+    -->
+    <input type="checkbox" id="nav-toggle" hidden>
+    <!--
+    Выдвижную панель размещаете ниже
+    флажка (checkbox), но не обязательно
+    непосредственно после него, например
+    можно и в конце страницы
+    -->
+    <nav class="nav">
+        <!--
+    Метка с именем `id` чекбокса в `for` атрибуте
+    Символ Unicode 'TRIGRAM FOR HEAVEN' (U+2630)
+    Пустой атрибут `onclick` используем для исправления бага в iOS < 6.0
+    См: http://timpietrusky.com/advanced-checkbox-hack
+    -->
+        <label for="nav-toggle" class="nav-toggle" onclick></label>
+        <!--
+    Здесь размещаете любую разметку,
+    если это меню, то скорее всего неупорядоченный список <ul>
+    -->
+        <h2 class="logo">
+            <a href="/mobile/mobile">Объект(ы)</a>
+        </h2>
+        <ul>
+            <li><a href="/edit/edit/">Личный кабинет</a></li><br>
+            {% for aaa in list1 %}
+            <li><a href="/api/v1/view/?ID={{ aaa.ID_obj }}">{{ aaa.Name }}</a></li>
+            {% endfor %}
+
+        </ul>
+    </nav>
+    <!--
+    Маска (затемнение) основного контента при включенной панели
+    по-умолчанию данная фишка не используется, если оно вам надо,
+		просто расккоментируйте div-контейнер ниже
+
+    <div class="mask-content"></div>
+		-->
+
+    <!--
+    Далее размещаем любую разметку,
+    много слов, картинки и т.д...
+    -->
+    <!--<main role="main">
+        <article>
+            <header>
+                <h1 class="header__title">Просто Демо:</h1>
+                <h2>Выдвигающееся боковое меню на чистом CSS</h2>
+            </header>
+            <section>
+               <p style="text-align: center;">
+                <a href="index.html" class="btn btn-primary">Меню Слева</a>
+                <a href="right-slide-panel.html" class="btn btn-secondary">Меню Справа</a>
+                <p>Нажмите на "гамбургер-иконку" в левом или правом верхнем углу, в зависимости от выбранного вами варианта, и вы увидите выдвигающуюся боковую панель в действии. Чаще всего в таких панельках размещают меню навигации по сайту, что собственно мы и сделали. Вы же можете использовать боковую панель, для любого другого элемента, который по вашему разумению, должен быть изначально скрыт, например, форму подписки, блок кнопок социальных сетей, и т.д. и т.п...
+                <p>Работа данного меню построена на чистом CSS, без подключения javascript. Переключение осуществляется с помощью скрытого флажка (checkbox) с использованием псевдокласса :checked из обоймы CSS3</p>
+                <p>С переклюателем панели особо не стал заморачиваться и использовал символ Unicode 'TRIGRAM FOR HEAVEN' (U+2630), с простейшей заменой символа на 'Знак Умножения' (U+2715), когда панель раскрыта. Вам ничего не мешает испльзовать любой другой значок, иконку или просто текст.
+            </section>
+            <hr>
+            <footer>
+                <p><a href="http://dbmast.ru/vydvigayushheesya-bokovoe-menyu-na-chistom-css">← Изучить Детали</a>
+                <p>сделано с любовью - <a href="https://twitter.com/dobrovoi">@dobrovoi</a>
+            </footer>
+        </article>
+
+    </main>-->
+
+<div class="container">
+    <div id="map">
+        <!--<div class="leaflet-bottom leaflet-left">
+             <div style="padding-top: 0px;padding-right: 0px">
+                 <a href="/login/logout"><input type="button" id="Btn2" value="Выход"  class="btnStyle span3 leaflet-control" /></a>
+             </div>
+        </div> -->
+    </div>
+  <script>
+   initMap();
+
+  </script>
+
+</div>
+</body>
+</html>

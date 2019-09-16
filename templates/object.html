@@ -1,0 +1,38 @@
+{% extends "main_pk_templates.html" %}
+
+
+{% block content %}
+<center>
+<h2 class="art-postheader">Редактор объектов:</h2>
+</center>
+
+<div class="art-commentsform">
+<form action="" method="post" id="commentform">{% csrf_token %}
+<center>                               <h4 tyle="text-align:center">
+                            ID объекта: {{ list1.ID_obj }}</h4></center>
+
+     <input type="text" name="ID" value="{{list1.ID_obj}}" required="" id="ID" hidden>
+<p class="comment-form-author">
+<label for="author" style="text-align:center;"><center>Имя</center></label>
+<input id="author" name="name" type="text" value="{{list1.name}}" required="" size="30" style="text-align:center">
+</p>
+<p class="comment-form-email">
+<label for="Phone" style="text-align:center;"><center>Телефон</center></label>
+<input id="Phone" name="Phone" type="text" value="{{list1.telephone}}" size="30" style="text-align:center">
+</p>
+<p class="comment-form-email">
+<label for="email" style="text-align:center;"><center>Е-мейл</center></label>
+<input id="email" name="Email" type="email" value="{{list1.email}}" size="30" style="text-align:center">
+</p>
+<p class="comment-form-comment">
+    <label for="Message" style="text-align:center;"><center>Дополнительная информация</center></label>
+<textarea id="Message" name="Message" cols="45" rows="8" aria-required="true" style="text-align:center">{{list1.dop}}</textarea>
+</p><p class="comment-form-comment">
+        <label for="Message" style="text-align:center;"><center>Поставьте галочку для удаления объекта</center></label>
+        <input type="checkbox" name="dell" id="dell" value="Checked"></p>
+<p class="form-submit"><center>
+<input name="submit" class="art-button" type="submit" value="Сохранить" style="text-align:center"></center>
+</p>
+</form>
+</div>
+{% endblock %}

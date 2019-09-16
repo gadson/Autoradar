@@ -1,0 +1,36 @@
+
+{% extends "login_template.html" %}
+
+
+{% block content %}
+<script>
+
+function exit() {
+    location.replace('/');
+}
+
+</script>
+
+    <div class="user-icon"></div>
+    <div class="pass-icon"></div>
+<form method="post" class="login-form" action="">{% csrf_token %}
+
+
+            <div class="header">
+                <h1>Восстановление доступа</h1></div>
+        <div class="content">
+    <p style="color:#000000;" align="center">Введите e-mail указанный при регистрации на который будут отправлены данные для входа в систему</p><br>
+<input  style="text-align:center; color:#000000;" class="input username" type="email" name="email" value="" onblur="field_blur(this, 'username');" class="email" required=""/>
+    {{info}}
+                </div>
+   <div class="footer">
+    <input  style="align:center;"  type="submit" value="Восстановить" class="button"/>
+               <input type="button" name="submit" onclick="exit();" value="На главную" class="register" />
+   </div>
+
+
+
+
+</form>
+
+{% endblock %}
