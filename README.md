@@ -7,10 +7,9 @@ Build
 
 git clone git@github.com:gadson/Autoradar<br>
 cd /GeoServer<br>
+insall in docker postgress<br>
 edit file settings.py<br>
-insall in docker postgress
-
-Configure bd
+Configure bd<br>
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
