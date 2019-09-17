@@ -10,12 +10,13 @@ cd /GeoServer<br>
 insall in docker postgress<br>
 edit file settings.py<br>
 Configure bd<br>
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
-        'PORT': '5432',
-
+        'NAME': 'postgres',<br>
+        'USER': 'postgres',<br>
+        'PASSWORD': 'postgres',<br>
+        'HOST': 'db',<br>
+        'PORT': '5432',<br>
+<br>       
+Configure other settings<br>
 EMAIL_HOST = 'smtp.yandex.ru' - smtp send mail server name<br>
 EMAIL_HOST_USER = 'info@*****.ru' smtp username<br>
 EMAIL_HOST_PASSWORD = '' smtp password<br>
