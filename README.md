@@ -37,6 +37,6 @@ RC_DOMAIN = 'http://mychatserver.com:3000'<br>
 
 cd ..
 
-sudo docker build -t geoserver .
+sudo docker build -t geoserver .<br>
 sudo docker run --restart=always -d -p 8001:8001 geoserver
 
