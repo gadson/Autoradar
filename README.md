@@ -39,4 +39,7 @@ cd ..
 
 sudo docker build -t geoserver .<br>
 sudo docker run --restart=always -d -p 8001:8001 geoserver
+docker-compose run geoserver python manage.py migrate
+docker-compose run geoserver python manage.py createsuperuser
+
 
