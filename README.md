@@ -8,6 +8,14 @@ Build
 git clone git@github.com:gadson/Autoradar<br>
 cd /GeoServer<br>
 edit file settings.py<br>
+insall in docker postgress
+
+Configure bd
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'db',
+        'PORT': '5432',
 
 EMAIL_HOST = 'smtp.yandex.ru' - smtp send mail server name<br>
 EMAIL_HOST_USER = 'info@*****.ru' smtp username<br>
@@ -27,5 +35,8 @@ RC_USERNAME = 'Robot_Vasia'<br>
 RC_PASSWORD = ''<br>
 RC_DOMAIN = 'http://mychatserver.com:3000'<br>
 
+cd ..
 
+sudo docker build -t geoserver .
+sudo docker run --restart=always -d -p 8001:8001 geoserver
 
