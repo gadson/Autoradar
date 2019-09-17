@@ -38,8 +38,8 @@ RC_DOMAIN = 'http://mychatserver.com:3000'<br>
 cd ..
 
 sudo docker build -t geoserver .<br>
-sudo docker run --restart=always -d -p 8001:8001 geoserver
-docker-compose run geoserver python manage.py migrate
-docker-compose run geoserver python manage.py createsuperuser
+sudo docker run --restart=always -d -p 8001:8001 geoserver<br>
+docker-compose run geoserver python manage.py migrate<br>
+docker-compose run geoserver python manage.py createsuperuser<br>
 
 
