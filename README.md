@@ -1,5 +1,5 @@
 # Autoradar GPS/GLONASS service
-# GPS/Glonass monitoring server an open source GPS/GLONASS tracking system. This repository contains Python back-end service. It support tk102-103 protokol. It also provides easy to use REST API.
+GPS/Glonass monitoring server an open source GPS/GLONASS tracking system. This repository contains Python back-end service. It support tk102-103 protokol. It also provides easy to use REST API.
 
 Other parts of Autoradar GPS/GLONASS service solution include:
 
