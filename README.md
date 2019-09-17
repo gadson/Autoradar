@@ -15,7 +15,7 @@ Configure bd<br>
         'PASSWORD': 'postgres',<br>
         'HOST': 'db',<br>
         'PORT': '5432',<br>
-<br>       
+    
 Configure other settings<br>
 EMAIL_HOST = 'smtp.yandex.ru' - smtp send mail server name<br>
 EMAIL_HOST_USER = 'info@*****.ru' smtp username<br>
