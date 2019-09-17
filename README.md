@@ -8,6 +8,7 @@ Other parts of Autoradar GPS/GLONASS service solution include:
     Autoradar Manager iOS app
 
 installation:<br>
+git clone --recursive https://github.com/gadson/Autoradar.git
 
 cd /GeoServer<br>
 insall in docker postgress<br>
