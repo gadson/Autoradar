@@ -1,10 +1,13 @@
-# Autoradar by Igor Morozov 
-# GPS/Glonass monitoring server with tk103 gate
-Autoradar server
+# Autoradar GPS/GLONASS service
+# GPS/Glonass monitoring server an open source GPS/GLONASS tracking system. This repository contains Python back-end service. It support tk102-103 protokol. It also provides easy to use REST API.
 
-A receiver and web-ui for data from Android based GPS trackers.
-Build
+Other parts of Autoradar GPS/GLONASS service solution include:
 
+    Autoradar web app
+    Autoradar Manager Android app
+    Autoradar Manager iOS app
+
+installation:<br
 git clone git@github.com:gadson/Autoradar<br>
 cd /GeoServer<br>
 insall in docker postgress<br>
