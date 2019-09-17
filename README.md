@@ -17,15 +17,15 @@ EMAIL_USE_TLS = True<br>
 FROM_EMAIL='' from e-mail<br>
 
 #Main domain<br>
-MAIN_DOMAIN ='http://*******.com' <br>
+MAIN_DOMAIN ='http://mysite.com' <br>
 <br>
-#Google GCM PUSH service API key <br>
+Google GCM PUSH service API key <br>
 GOOGLE_API_KEY = "" <br>
 <br>
 Chat server settings for log messages<br>
 RC_USERNAME = 'Robot_Vasia'<br>
 RC_PASSWORD = ''<br>
-RC_DOMAIN = 'http://*******:3000'<br>
+RC_DOMAIN = 'http://mychatserver.com:3000'<br>
 
 
 
